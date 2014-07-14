@@ -20,10 +20,10 @@ RUN mkdir -p /var/log/supervisor
 RUN git clone https://github.com/nlplab/brat /brat
 
 ADD config.py /brat/config.py
-RUN mkdir -p /data
-RUN mkdir -p /work
-RUN chown www-data:www-data /data
-RUN chown www-data:www-data /work
+RUN mkdir -p /brat/data
+RUN mkdir -p /brat/work
+RUN chown www-data:www-data /brat/data
+RUN chown www-data:www-data /brat/work
 RUN chmod 777 -R /brat
 ADD brat.conf /etc/apache2/sites-available/brat.conf
 RUN a2dissite 000-default

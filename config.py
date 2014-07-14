@@ -16,10 +16,10 @@ ADMIN_CONTACT_EMAIL = 'yumyai@gmail.com'
 #     WORK_DIR: directory that the server uses for temporary files
 #
 BASE_DIR = dirname(__file__)
-#DATA_DIR = path_join(BASE_DIR, 'data')
-#WORK_DIR = path_join(BASE_DIR, 'work')
-DATA_DIR = '/data'
-WORK_DIR = '/work'
+DATA_DIR = path_join(BASE_DIR, 'data')
+WORK_DIR = path_join(BASE_DIR, 'work')
+#DATA_DIR = '/data'
+#WORK_DIR = '/work'
 # If you have installed brat as suggested in the installation
 # instructions, you can set up BASE_DIR, DATA_DIR and WORK_DIR by
 # removing the three lines above and deleting the initial '#'
