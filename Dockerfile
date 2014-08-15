@@ -2,7 +2,7 @@ FROM ubuntu:trusty
 MAINTAINER Preecha Patumcharoenpol <yumyai@gmail.com>
 
 # Install packages
-ADD sources.list /etc/apt/sources.list
+#ADD sources.list /etc/apt/sources.list
 RUN apt-get update 
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install supervisor git apache2 libapache2-mod-php5 php5-mysql php5-gd php-pear php-apc curl && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin && mv /usr/local/bin/composer.phar /usr/local/bin/composer
 RUN sed -i "s/variables_order.*/variables_order = \"EGPCS\"/g" /etc/php5/apache2/php.ini
@@ -32,7 +32,9 @@ RUN a2enmod cgi
 
 RUN rm -fr /var/www/html && ln -s /brat /var/www/html
 
-EXPOSE 22 80
+VOLUME ["/brat/data", "/brat/work"]
+
+EXPOSE 80
 
 # Add image configuration and scripts
 ADD start.sh /start.sh
