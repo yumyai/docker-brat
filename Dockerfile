@@ -11,34 +11,31 @@ RUN sed -i "s/variables_order.*/variables_order = \"EGPCS\"/g" /etc/php5/apache2
 RUN mkdir -p /var/log/supervisor
 
 # Add SSH
-#ENV MYPASSWORD screencast
-#RUN echo "root:$MYPASSWORD" | chpasswd
-#RUN sed --in-place=.bak 's/without-password/yes/' /etc/ssh/sshd_config
-
 
 # Configure application
 RUN git clone https://github.com/nlplab/brat /brat
 
-ADD config.py /brat/config.py
+ADD files/config.py /brat/config.py
 RUN mkdir -p /brat/data
 RUN mkdir -p /brat/work
 RUN chown www-data:www-data /brat/data
 RUN chown www-data:www-data /brat/work
 RUN chmod 777 -R /brat
-ADD brat.conf /etc/apache2/sites-available/brat.conf
+ADD files/brat.conf /etc/apache2/sites-available/brat.conf
 RUN a2dissite 000-default
 RUN a2ensite brat
 RUN a2enmod cgi
 
 RUN rm -fr /var/www/html && ln -s /brat /var/www/html
 
+# I don't know why this was commented
 VOLUME ["/brat/data", "/brat/work"]
 
 EXPOSE 80
 
 # Add image configuration and scripts
-ADD start.sh /start.sh
-ADD run.sh /run.sh
+ADD files/start.sh /start.sh
+ADD files/run.sh /run.sh
 RUN chmod 755 /*.sh
-ADD supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
+ADD files/supervisord-apache2.conf /etc/supervisor/conf.d/supervisord-apache2.conf
 CMD ["/run.sh"]
